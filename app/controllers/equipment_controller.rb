@@ -10,7 +10,7 @@ class EquipmentController < ApplicationController
   end
 
   def index
-    @equipment = Equipment.all
+    @equipment = Equipment.page(params[:page]).per(10)
 
     render("equipment/index.html.erb")
   end
