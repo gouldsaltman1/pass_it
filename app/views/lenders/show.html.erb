@@ -57,6 +57,41 @@
           </div>
         </li>
       <% end %>
+
+      <li class="list-group-item">
+        <form action="/create_loan" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for borrow_id -->
+      <input type="hidden" name="borrow_id" value="<%= current_borrower.id %>">
+
+      <!-- Label and input for lender_id -->
+      <input type="hidden" name="lender_id" value="<%= @lender.id %>">
+
+      <!-- Label and input for borrower_lender_equipment -->
+      <div class="form-group">
+        <label for="borrower_lender_equipment" class="control-label">
+          Borrower lender equipment
+        </label>
+
+        <input type="text" id="borrower_lender_equipment" name="borrower_lender_equipment" placeholder="Borrower lender equipment" class="form-control" value="">
+      </div>
+
+      <!-- Label and input for equipment_id -->
+      <div class="form-group">
+        <label for="equipment_id" class="control-label">
+          Equipment
+        </label>
+
+        <%= select_tag(:equipment_id, options_from_collection_for_select(Equipment.all, :id, :user_id), :class => "form-control") %>
+      </div>
+
+      <button class="btn btn-block btn-success">
+        Create Loan
+      </button>
+    </form>
+      </li>
     </ul>
   </div>
 </div>

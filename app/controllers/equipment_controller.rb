@@ -16,6 +16,8 @@ class EquipmentController < ApplicationController
   end
 
   def show
+    @loan = Loan.new
+    @photo = Photo.new
     @equipment = Equipment.find(params[:id])
 
     render("equipment/show.html.erb")

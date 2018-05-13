@@ -6,6 +6,7 @@ class LendersController < ApplicationController
   end
 
   def show
+    @loan = Loan.new
     @lender = Lender.find(params[:id])
 
     render("lenders/show.html.erb")
