@@ -15,7 +15,7 @@
 
       <% @equipment.each do |equipment| %>
       <tr>
-        <td><%= equipment.user_id %></td>
+        <td><%= equipment.loaner.created_at %></td>
         <td>
           <a href="/equipment/<%= equipment.id %>" class="btn btn-primary">Show</a>
           <a href="/equipment/<%= equipment.id %>/edit" class="btn btn-warning">Edit</a>
