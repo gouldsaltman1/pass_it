@@ -24,7 +24,7 @@
           User
         </label>
 
-        <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @equipment.user_id %>">
+        <%= select_tag(:user_id, options_from_collection_for_select(Borrower.all, :id, :created_at, @equipment.user_id), :class => "form-control") %>
       </div>
 
       <button class="btn btn-success">
