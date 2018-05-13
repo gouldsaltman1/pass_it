@@ -47,8 +47,6 @@ class EquipmentController < ApplicationController
   def update
     @equipment = Equipment.find(params[:id])
 
-    @equipment.user_id = params[:user_id]
-
     save_status = @equipment.save
 
     if save_status == true
