@@ -19,7 +19,7 @@
       <% @loans.each do |loan| %>
       <tr>
         <td><%= loan.borrow.created_at %></td>
-        <td><%= loan.lender_id %></td>
+        <td><%= loan.lender.id %></td>
         <td><%= loan.borrower_lender_equipment %></td>
         <td><%= loan.equipment_id %></td>
         <td>
