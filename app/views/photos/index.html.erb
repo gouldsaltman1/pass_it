@@ -17,7 +17,7 @@
       <% @photos.each do |photo| %>
       <tr>
         <td><%= photo.equipment.user_id %></td>
-        <td><%= photo.photo %></td>
+        <td><img src='<%= photo.photo %>' class='img-responsive'></td>
         <td>
           <a href="/photos/<%= photo.id %>" class="btn btn-primary">Show</a>
           <a href="/photos/<%= photo.id %>/edit" class="btn btn-warning">Edit</a>
