@@ -15,7 +15,13 @@
 
       <% @equipment.each do |equipment| %>
       <tr>
-        <td><%= equipment.loaner.created_at %></td>
+        <td>
+          <% if equipment.loaner.present? %>
+            <a href="/borrowers/<%= equipment.loaner.id %>">
+              <%= equipment.loaner.created_at %>
+            </a>
+          <% end %>
+        </td>
         <td>
           <a href="/equipment/<%= equipment.id %>" class="btn btn-primary">Show</a>
           

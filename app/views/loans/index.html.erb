@@ -18,10 +18,28 @@
 
       <% @loans.each do |loan| %>
       <tr>
-        <td><%= loan.borrow.created_at %></td>
-        <td><%= loan.lender.id %></td>
+        <td>
+          <% if loan.borrow.present? %>
+            <a href="/borrowers/<%= loan.borrow.id %>">
+              <%= loan.borrow.created_at %>
+            </a>
+          <% end %>
+        </td>
+        <td>
+          <% if loan.lender.present? %>
+            <a href="/lenders/<%= loan.lender.id %>">
+              <%= loan.lender.id %>
+            </a>
+          <% end %>
+        </td>
         <td><%= loan.borrower_lender_equipment %></td>
-        <td><%= loan.equipment.user_id %></td>
+        <td>
+          <% if loan.equipment.present? %>
+            <a href="/equipment/<%= loan.equipment.id %>">
+              <%= loan.equipment.user_id %>
+            </a>
+          <% end %>
+        </td>
         <td>
           <a href="/loans/<%= loan.id %>" class="btn btn-primary">Show</a>
           

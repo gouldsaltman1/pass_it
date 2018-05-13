@@ -6,7 +6,13 @@
   <div class="col-md-12 mb-2">
     <dl class="dl-horizontal">
       <dt>User</dt>
-      <dd><%= @equipment.user_id %></dd>
+      <dd>
+        <% if @equipment.loaner.present? %>
+          <a href="/borrowers/<%= @equipment.user_id %>">
+            <%= @equipment.loaner.created_at %>
+          </a>
+        <% end %>
+      </dd>
 
     </dl>
 

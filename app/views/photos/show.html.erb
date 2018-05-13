@@ -6,7 +6,13 @@
   <div class="col-md-12 mb-2">
     <dl class="dl-horizontal">
       <dt>Equipment</dt>
-      <dd><%= @photo.equipment_id %></dd>
+      <dd>
+        <% if @photo.equipment.present? %>
+          <a href="/equipment/<%= @photo.equipment_id %>">
+            <%= @photo.equipment.user_id %>
+          </a>
+        <% end %>
+      </dd>
 
       <dt>Photo</dt>
       <dd><img src="<%= @photo.photo %>" class="img-responsive"></dd>
