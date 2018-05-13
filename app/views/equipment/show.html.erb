@@ -14,12 +14,14 @@
       <a href="/equipment" class="btn btn-primary">
         Back
       </a>
-      <a href="/equipment/<%= @equipment.id %>/edit" class="btn btn-warning">
-        Edit
-      </a>
-      <a href="/delete_equipment/<%= @equipment.id %>" class="btn btn-danger" rel="nofollow">
-        Delete
-      </a>
+      <% if current_borrower == @equipment.loaner %>
+        <a href="/equipment/<%= @equipment.id %>/edit" class="btn btn-warning">
+          Edit
+        </a>
+        <a href="/delete_equipment/<%= @equipment.id %>" class="btn btn-danger" rel="nofollow">
+          Delete
+        </a>
+      <% end %>
     </div>
   </div>
 </div>

@@ -18,8 +18,11 @@
         <td><%= equipment.loaner.created_at %></td>
         <td>
           <a href="/equipment/<%= equipment.id %>" class="btn btn-primary">Show</a>
-          <a href="/equipment/<%= equipment.id %>/edit" class="btn btn-warning">Edit</a>
-          <a href="/delete_equipment/<%= equipment.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+          
+          <% if current_borrower == equipment.loaner %>
+            <a href="/equipment/<%= equipment.id %>/edit" class="btn btn-warning">Edit</a>
+            <a href="/delete_equipment/<%= equipment.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+          <% end %>
         </td>
       </tr>
       <% end %>

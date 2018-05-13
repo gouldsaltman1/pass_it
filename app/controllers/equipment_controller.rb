@@ -1,4 +1,14 @@
 class EquipmentController < ApplicationController
+  before_action :current_borrower_must_be_equipment_loaner, :only => [:edit, :update, :destroy]
+
+  def current_borrower_must_be_equipment_loaner
+    equipment = Equipment.find(params[:id])
+
+    unless current_borrower == equipment.loaner
+      redirect_to :back, :alert => "You are not authorized for that."
+    end
+  end
+
   def index
     @equipment = Equipment.all
 
