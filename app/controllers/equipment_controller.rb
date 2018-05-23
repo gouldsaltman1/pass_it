@@ -1,24 +1,14 @@
 class EquipmentController < ApplicationController
-  before_action :current_borrower_must_be_equipment_loaner, :only => [:edit, :update, :destroy]
-
-  def current_borrower_must_be_equipment_loaner
-    equipment = Equipment.find(params[:id])
-
-    unless current_borrower == equipment.loaner
-      redirect_to :back, :alert => "You are not authorized for that."
-    end
-  end
-
   def index
     @q = Equipment.ransack(params[:q])
-    @equipment = @q.result(:distinct => true).includes(:loaner, :photos, :loans).page(params[:page]).per(10)
+    @equipment = @q.result(:distinct => true).includes(:lender, :equipment_comments, :loans).page(params[:page]).per(10)
 
     render("equipment/index.html.erb")
   end
 
   def show
     @loan = Loan.new
-    @photo = Photo.new
+    @equipment_comment = EquipmentComment.new
     @equipment = Equipment.find(params[:id])
 
     render("equipment/show.html.erb")
@@ -34,6 +24,12 @@ class EquipmentController < ApplicationController
     @equipment = Equipment.new
 
     @equipment.user_id = params[:user_id]
+    @equipment.lender_id = params[:lender_id]
+    @equipment.category = params[:category]
+    @equipment.price = params[:price]
+    @equipment.image = params[:image]
+    @equipment.time_available_start = params[:time_available_start]
+    @equipment.time_available_end = params[:time_available_end]
 
     save_status = @equipment.save
 
@@ -59,6 +55,14 @@ class EquipmentController < ApplicationController
 
   def update
     @equipment = Equipment.find(params[:id])
+
+    @equipment.user_id = params[:user_id]
+    @equipment.lender_id = params[:lender_id]
+    @equipment.category = params[:category]
+    @equipment.price = params[:price]
+    @equipment.image = params[:image]
+    @equipment.time_available_start = params[:time_available_start]
+    @equipment.time_available_end = params[:time_available_end]
 
     save_status = @equipment.save
 

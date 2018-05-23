@@ -1,12 +1,12 @@
-class Photo < ApplicationRecord
-  mount_uploader :photo, PhotoUploader
-
+class EquipmentComment < ApplicationRecord
   # Direct associations
 
-  belongs_to :equipment,
-             :required => false,
+  belongs_to :piece_of_equipment,
              :class_name => "Equipment",
+             :foreign_key => "equipment_id",
              :counter_cache => true
+
+  belongs_to :borrower
 
   # Indirect associations
 

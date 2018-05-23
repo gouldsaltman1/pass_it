@@ -1,13 +1,19 @@
 class LendersController < ApplicationController
   def index
     @q = Lender.ransack(params[:q])
-    @lenders = @q.result(:distinct => true).includes(:loans).page(params[:page]).per(10)
+    @lenders = @q.result(:distinct => true).includes(:lender_comments, :equipment, :loans).page(params[:page]).per(10)
+    @location_hash = Gmaps4rails.build_markers(@lenders.where.not(:address_latitude => nil)) do |lender, marker|
+      marker.lat lender.address_latitude
+      marker.lng lender.address_longitude
+      marker.infowindow "<h5><a href='/lenders/#{lender.id}'>#{lender.id}</a></h5><small>#{lender.address_formatted_address}</small>"
+    end
 
     render("lenders/index.html.erb")
   end
 
   def show
-    @loan = Loan.new
+    @equipment = Equipment.new
+    @lender_comment = LenderComment.new
     @lender = Lender.find(params[:id])
 
     render("lenders/show.html.erb")
@@ -25,6 +31,7 @@ class LendersController < ApplicationController
     @lender.first_name = params[:first_name]
     @lender.last_name = params[:last_name]
     @lender.email = params[:email]
+    @lender.address = params[:address]
 
     save_status = @lender.save
 
@@ -54,6 +61,7 @@ class LendersController < ApplicationController
     @lender.first_name = params[:first_name]
     @lender.last_name = params[:last_name]
     @lender.email = params[:email]
+    @lender.address = params[:address]
 
     save_status = @lender.save
 

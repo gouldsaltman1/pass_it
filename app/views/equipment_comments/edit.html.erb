@@ -1,6 +1,6 @@
 <!-- Validation failure messages -->
-<% if @photo.errors.any? %>
-  <% @photo.errors.full_messages.each do |message| %>
+<% if @equipment_comment.errors.any? %>
+  <% @equipment_comment.errors.full_messages.each do |message| %>
     <div class="alert alert-dismissable alert-danger">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
       <%= message %>
@@ -9,12 +9,12 @@
 <% end %>
 
 <div class="page-header">
-  <h3>Edit Photo #<%= @photo.id %></h3>
+  <h3>Edit Equipment Comment #<%= @equipment_comment.id %></h3>
 </div>
 
 <div class="row">
   <div class="col-md-12">
-    <form action="/update_photo/<%= @photo.id %>" method="post" enctype="multipart/form-data">
+    <form action="/update_equipment_comment/<%= @equipment_comment.id %>" method="post">
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
@@ -24,24 +24,23 @@
           Equipment
         </label>
 
-        <%= select_tag(:equipment_id, options_from_collection_for_select(Equipment.all, :id, :user_id, @photo.equipment_id), :class => "form-control") %>
+        <%= select_tag(:equipment_id, options_from_collection_for_select(Equipment.all, :id, :user_id, @equipment_comment.equipment_id), :class => "form-control") %>
       </div>
 
-      <!-- Label and input for photo -->
+      <!-- Label and input for borrower_id -->
       <div class="form-group">
-        <label for="photo" class="control-label">
-          Photo
+        <label for="borrower_id" class="control-label">
+          Borrower
         </label>
 
-        <%= cl_image_tag(@photo.photo.to_s, :width => 90, :height => 90, :crop => :thumb) %>
-        <input type="file" id="photo" name="photo" class="form-control">
+        <%= select_tag(:borrower_id, options_from_collection_for_select(Borrower.all, :id, :created_at, @equipment_comment.borrower_id), :class => "form-control") %>
       </div>
 
       <button class="btn btn-warning">
-        Update Photo
+        Update Equipment Comment
       </button>
       or
-      <a href="/photos/<%= @photo.id %>">Cancel</a>
+      <a href="/equipment_comments/<%= @equipment_comment.id %>">Cancel</a>
     </form>
   </div>
 </div>

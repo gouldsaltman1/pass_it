@@ -11,7 +11,7 @@ class LoansController < ApplicationController
 
   def index
     @q = current_borrower.loans.ransack(params[:q])
-    @loans = @q.result(:distinct => true).includes(:borrow, :lender, :equipment).page(params[:page]).per(10)
+    @loans = @q.result(:distinct => true).includes(:borrow, :piece_of_equipment, :lender).page(params[:page]).per(10)
 
     render("loans/index.html.erb")
   end
