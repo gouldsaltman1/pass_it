@@ -45,6 +45,15 @@
         <input type="text" id="email" name="email" placeholder="Email" class="form-control" value="<%= @lender.email %>">
       </div>
 
+      <!-- Label and input for address -->
+      <div class="form-group">
+        <label for="address" class="control-label">
+          Address
+        </label>
+
+        <input type="text" id="address" name="address" placeholder="Address" class="form-control" value="<%= @lender.address %>">
+      </div>
+
       <button class="btn btn-warning">
         Update Lender
       </button>

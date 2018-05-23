@@ -1,31 +1,14 @@
 <div class="page-header">
   <h1>
-    Loans
-    <a href="/loans/new" class="btn btn-lg btn-success">New Loan</a>
+    Equipment comments
+    <a href="/equipment_comments/new" class="btn btn-lg btn-success">New Equipment comment</a>
   </h1>
 </div><div class="row mb-1">
   <div class="col-md-12">
-    <%= search_form_for @q, :class => collapse_search_form, :id => "loans_filters" do |f| %>
+    <%= search_form_for @q, :class => collapse_search_form, :id => "equipment_comments_filters" do |f| %>
       <p class="lead">Narrow results:</p>
 
         <div class="form-group">
-    <%= f.label :borrower_lender_equipment_cont, "Borrower lender equipment contains" %>
-    <%= f.text_field :borrower_lender_equipment_cont, :class => "form-control", :placeholder => "Borrower lender equipment contains" %>
-  </div>
-
-<div class="form-group">
-  <%= f.label :lender_id, "Lender" %>
-  <div class="row">
-    <div class='col-md-6 mb-1'>
-      <%= f.text_field :lender_id_gteq, :class => "form-control", :placeholder => "Lender greater than or equal to" %>
-    </div>
-    <div class='col-md-6'>
-      <%= f.text_field :lender_id_lteq, :class => "form-control", :placeholder => "Lender less than or equal to" %>
-    </div>
-  </div>
-</div>
-
-<div class="form-group">
           <%= f.label :created_at, "Created at" %>
           <div class="row">
             <div class='col-md-6 mb-1'>
@@ -69,8 +52,8 @@
           <%= f.label :created_at, "Borrower Created at" %>
           <div class="row">
             <div class='col-md-6 mb-1'>
-              <div class='input-group date' id='borrowgteqcreated_atPicker'>
-                  <%= f.text_field :borrow_created_at_gteq, :class => "form-control", :placeholder => "Borrower Created at greater than or equal to" %>
+              <div class='input-group date' id='borrowergteqcreated_atPicker'>
+                  <%= f.text_field :borrower_created_at_gteq, :class => "form-control", :placeholder => "Borrower Created at greater than or equal to" %>
                   <span class="input-group-addon">
                       <span class="glyphicon glyphicon-calendar"></span>
                   </span>
@@ -78,8 +61,8 @@
             </div>
 
             <div class='col-md-6'>
-              <div class='input-group date' id='borrowlteqcreated_atPicker'>
-                  <%= f.text_field :borrow_created_at_lteq, :class => "form-control", :placeholder => "Borrower Created at less than or equal to" %>
+              <div class='input-group date' id='borrowerlteqcreated_atPicker'>
+                  <%= f.text_field :borrower_created_at_lteq, :class => "form-control", :placeholder => "Borrower Created at less than or equal to" %>
                   <span class="input-group-addon">
                       <span class="glyphicon glyphicon-calendar"></span>
                   </span>
@@ -89,18 +72,18 @@
       </div>
       <script type="text/javascript">
           $(function () {
-              $('#borrowgteqcreated_atPicker').datetimepicker({
+              $('#borrowergteqcreated_atPicker').datetimepicker({
                   format: 'YYYY-MM-DD hh:mm:SS'
               });
-              $('#borrowlteqcreated_atPicker').datetimepicker({
+              $('#borrowerlteqcreated_atPicker').datetimepicker({
                   useCurrent: false,
                   format: 'YYYY-MM-DD hh:mm:SS'
               });
-              $('#borrowgteqcreated_atPicker').on("dp.change", function (e) {
-                  $('#borrowlteqcreated_atPicker').data("DateTimePicker").minDate(e.date);
+              $('#borrowergteqcreated_atPicker').on("dp.change", function (e) {
+                  $('#borrowerlteqcreated_atPicker').data("DateTimePicker").minDate(e.date);
               });
-              $('#borrowlteqcreated_atPicker').on("dp.change", function (e) {
-                  $('#borrowgteqcreated_atPicker').data("DateTimePicker").maxDate(e.date);
+              $('#borrowerlteqcreated_atPicker').on("dp.change", function (e) {
+                  $('#borrowergteqcreated_atPicker').data("DateTimePicker").maxDate(e.date);
               });
           });
       </script>
@@ -119,9 +102,9 @@
 
       <%= f.submit :class => "btn btn-primary btn-block mb-1" %>
 
-      <a href="/loans" class="btn btn-default btn-block mb-1">Clear filters</a>
+      <a href="/equipment_comments" class="btn btn-default btn-block mb-1">Clear filters</a>
     <% end %>
-    <a class="btn btn-default btn-block mb-1" data-toggle="collapse" href="#loans_filters">
+    <a class="btn btn-default btn-block mb-1" data-toggle="collapse" href="#equipment_comments_filters">
       Show Filters
     </a>
   </div>
@@ -131,42 +114,35 @@
   <div class="col-md-12">
     <table class="table table-striped table-hover">
       <tr>
-        <th>Borrow</th>
-        <th>Lender</th>
-        <th>Borrower lender equipment</th>
         <th>Equipment</th>
+        <th>Borrower</th>
         <th>Actions</th>
       </tr>
 
-      <% @loans.each do |loan| %>
+      <% @equipment_comments.each do |equipment_comment| %>
       <tr>
         <td>
-          <% if loan.borrow.present? %>
-            <a href="/borrowers/<%= loan.borrow.id %>">
-              <%= loan.borrow.created_at %>
-            </a>
-          <% end %>
-        </td>
-        <td><%= loan.lender_id %></td>
-        <td><%= loan.borrower_lender_equipment %></td>
-        <td>
-          <% if loan.piece_of_equipment.present? %>
-            <a href="/equipment/<%= loan.piece_of_equipment.id %>">
-              <%= loan.piece_of_equipment.user_id %>
+          <% if equipment_comment.piece_of_equipment.present? %>
+            <a href="/equipment/<%= equipment_comment.piece_of_equipment.id %>">
+              <%= equipment_comment.piece_of_equipment.user_id %>
             </a>
           <% end %>
         </td>
         <td>
-          <a href="/loans/<%= loan.id %>" class="btn btn-primary">Show</a>
-          
-          <% if current_borrower == loan.borrow %>
-            <a href="/loans/<%= loan.id %>/edit" class="btn btn-warning">Edit</a>
-            <a href="/delete_loan/<%= loan.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+          <% if equipment_comment.borrower.present? %>
+            <a href="/borrowers/<%= equipment_comment.borrower.id %>">
+              <%= equipment_comment.borrower.created_at %>
+            </a>
           <% end %>
+        </td>
+        <td>
+          <a href="/equipment_comments/<%= equipment_comment.id %>" class="btn btn-primary">Show</a>
+          <a href="/equipment_comments/<%= equipment_comment.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_equipment_comment/<%= equipment_comment.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
         </td>
       </tr>
       <% end %>
     </table>
-    <%= paginate @loans, theme: 'twitter-bootstrap-4' %>
+    <%= paginate @equipment_comments, theme: 'twitter-bootstrap-4' %>
   </div>
 </div>

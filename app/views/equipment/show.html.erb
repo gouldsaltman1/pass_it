@@ -6,13 +6,31 @@
   <div class="col-md-12 mb-2">
     <dl class="dl-horizontal">
       <dt>User</dt>
+      <dd><%= @equipment.user_id %></dd>
+
+      <dt>Lender</dt>
       <dd>
-        <% if @equipment.loaner.present? %>
-          <a href="/borrowers/<%= @equipment.user_id %>">
-            <%= @equipment.loaner.created_at %>
+        <% if @equipment.lender.present? %>
+          <a href="/lenders/<%= @equipment.lender_id %>">
+            <%= @equipment.lender.id %>
           </a>
         <% end %>
       </dd>
+
+      <dt>Category</dt>
+      <dd><%= @equipment.category %></dd>
+
+      <dt>Price</dt>
+      <dd><%= @equipment.price %></dd>
+
+      <dt>Image</dt>
+      <dd><img src="<%= @equipment.image %>" class="img-responsive"></dd>
+
+      <dt>Time available start</dt>
+      <dd><%= @equipment.time_available_start %></dd>
+
+      <dt>Time available end</dt>
+      <dd><%= @equipment.time_available_end %></dd>
 
     </dl>
 
@@ -20,40 +38,38 @@
       <a href="/equipment" class="btn btn-primary">
         Back
       </a>
-      <% if current_borrower == @equipment.loaner %>
-        <a href="/equipment/<%= @equipment.id %>/edit" class="btn btn-warning">
-          Edit
-        </a>
-        <a href="/delete_equipment/<%= @equipment.id %>" class="btn btn-danger" rel="nofollow">
-          Delete
-        </a>
-      <% end %>
+      <a href="/equipment/<%= @equipment.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_equipment/<%= @equipment.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
     </div>
   </div>
 </div>
 
-<!-- A Equipment has many photos -->
+<!-- A Equipment has many equipment_comments -->
 
 <div class="row">
   <div class="col-md-12">
     <ul class="list-group">
       <li class="list-group-item list-group-item-info">
-        Photos
+        Equipment Comments
       </li>
 
-      <% @equipment.photos.each do |photo| %>
+      <% @equipment.equipment_comments.each do |equipment_comment| %>
         <li class="list-group-item">
-          <a href="/photos/<%= photo.id %>">
-            <%= photo.equipment_id %>
+          <a href="/equipment_comments/<%= equipment_comment.id %>">
+            <%= equipment_comment.equipment_id %>
           </a>
           <div class="btn-group btn-group-xs pull-right">
-            <a href="/photos/<%= photo.id %>" class="btn btn-primary">
+            <a href="/equipment_comments/<%= equipment_comment.id %>" class="btn btn-primary">
               <i class="fa fa-search-plus"></i>
             </a>
-            <a href="/photos/<%= photo.id %>/edit" class="btn btn-warning">
+            <a href="/equipment_comments/<%= equipment_comment.id %>/edit" class="btn btn-warning">
               <i class="fa fa-edit"></i>
             </a>
-            <a href="/delete_photo/<%= photo.id %>" class="btn btn-danger" rel="nofollow">
+            <a href="/delete_equipment_comment/<%= equipment_comment.id %>" class="btn btn-danger" rel="nofollow">
               <i class="fa fa-trash-o"></i>
             </a>
           </div>
@@ -61,24 +77,24 @@
       <% end %>
 
       <li class="list-group-item">
-        <form action="/create_photo" method="post" enctype="multipart/form-data">
+        <form action="/create_equipment_comment" method="post">
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
       <!-- Label and input for equipment_id -->
       <input type="hidden" name="equipment_id" value="<%= @equipment.id %>">
 
-      <!-- Label and input for photo -->
+      <!-- Label and input for borrower_id -->
       <div class="form-group">
-        <label for="photo" class="control-label">
-          Photo
+        <label for="borrower_id" class="control-label">
+          Borrower
         </label>
 
-        <input type="file" id="photo" name="photo" class="form-control">
+        <%= select_tag(:borrower_id, options_from_collection_for_select(Borrower.all, :id, :created_at), :class => "form-control") %>
       </div>
 
       <button class="btn btn-block btn-success">
-        Create Photo
+        Create Equipment Comment
       </button>
     </form>
       </li>
@@ -128,7 +144,7 @@
           Lender
         </label>
 
-        <%= select_tag(:lender_id, options_from_collection_for_select(Lender.all, :id, :id), :class => "form-control") %>
+        <input type="text" id="lender_id" name="lender_id" placeholder="Lender" class="form-control" value="">
       </div>
 
       <!-- Label and input for borrower_lender_equipment -->

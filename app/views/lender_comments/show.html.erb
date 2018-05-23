@@ -1,0 +1,42 @@
+<div class="page-header">
+  <h3>Lender Comment #<%= @lender_comment.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+      <dt>Lender</dt>
+      <dd>
+        <% if @lender_comment.lender.present? %>
+          <a href="/lenders/<%= @lender_comment.lender_id %>">
+            <%= @lender_comment.lender.id %>
+          </a>
+        <% end %>
+      </dd>
+
+      <dt>Borrower</dt>
+      <dd>
+        <% if @lender_comment.borrower.present? %>
+          <a href="/borrowers/<%= @lender_comment.borrower_id %>">
+            <%= @lender_comment.borrower.created_at %>
+          </a>
+        <% end %>
+      </dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/lender_comments" class="btn btn-primary">
+        Back
+      </a>
+      <% if current_borrower == @lender_comment.borrower %>
+        <a href="/lender_comments/<%= @lender_comment.id %>/edit" class="btn btn-warning">
+          Edit
+        </a>
+        <a href="/delete_lender_comment/<%= @lender_comment.id %>" class="btn btn-danger" rel="nofollow">
+          Delete
+        </a>
+      <% end %>
+    </div>
+  </div>
+</div>

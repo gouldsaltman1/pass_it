@@ -15,22 +15,16 @@
       </dd>
 
       <dt>Lender</dt>
-      <dd>
-        <% if @loan.lender.present? %>
-          <a href="/lenders/<%= @loan.lender_id %>">
-            <%= @loan.lender.id %>
-          </a>
-        <% end %>
-      </dd>
+      <dd><%= @loan.lender_id %></dd>
 
       <dt>Borrower lender equipment</dt>
       <dd><%= @loan.borrower_lender_equipment %></dd>
 
       <dt>Equipment</dt>
       <dd>
-        <% if @loan.equipment.present? %>
+        <% if @loan.piece_of_equipment.present? %>
           <a href="/equipment/<%= @loan.equipment_id %>">
-            <%= @loan.equipment.user_id %>
+            <%= @loan.piece_of_equipment.user_id %>
           </a>
         <% end %>
       </dd>
@@ -50,5 +44,36 @@
         </a>
       <% end %>
     </div>
+  </div>
+</div>
+
+<!-- A Loan has many lender -->
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info">
+        Lender
+      </li>
+
+      <% @loan.lender.each do |lender| %>
+        <li class="list-group-item">
+          <a href="/lenders/<%= lender.id %>">
+            <%= lender.id %>
+          </a>
+          <div class="btn-group btn-group-xs pull-right">
+            <a href="/lenders/<%= lender.id %>" class="btn btn-primary">
+              <i class="fa fa-search-plus"></i>
+            </a>
+            <a href="/lenders/<%= lender.id %>/edit" class="btn btn-warning">
+              <i class="fa fa-edit"></i>
+            </a>
+            <a href="/delete_lender/<%= lender.id %>" class="btn btn-danger" rel="nofollow">
+              <i class="fa fa-trash-o"></i>
+            </a>
+          </div>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </div>
